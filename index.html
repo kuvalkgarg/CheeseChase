@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CheeseChase | Automated Mouse Movement</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            * {
+                background-color: #191919;
+                color: white;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            }
+
+            h1.header {
+                padding-left: 50px;
+                padding-bottom: 25px;;
+                font-size: 50px;
+                display: flex;
+                color: #F535AA;
+            }
+
+            div.content {
+                padding: 20px;
+                border-style: solid;
+                border-radius: 10px;
+                border-color: #F535AA;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            p {
+                margin-bottom: 15px;
+            }
+
+            ul {
+                margin-bottom: 15px;
+                list-style-type: disc;
+                margin-left: 20px;
+            }
+
+            div.buttons {
+                margin: 100px;
+                display: flex;
+                justify-content: center;
+            }
+
+            button {
+                border-radius: 20px;
+                margin-right: 20px;
+                width : 200px;
+                height : 100px;
+                padding: 10px 20px;
+                font-size: 50px;
+                background-color: #191919;
+                color: #15f4ee;
+                cursor: pointer;
+            }
+
+            button.begin {
+                border-color: #15f4ee;
+            }
+
+            button.begin:hover {
+                background-color: #15f4ee;
+                color: #191919;
+            }
+
+            button:focus {
+                outline: none;
+            }
+
+            button:active {
+                background-color: #3e8e41;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="header">CheeseChase | Automated Mouse Movement for Idle Users</h1>
+        <div class="content">
+            <h1>A Tool to Overcome User Inactivity on Office Systems</h1>
+            <p>When you click on the "Begin" button provided below, your mouse will begin to move around aimlessly in random
+                directions, in order to simulate user activity, when you are away from your desk. To halt this simulation, hit the
+                "X" key on your keyboard.</p>
+            <p>Safety Assurance:
+            <ul>
+                <li>
+                    To avoid closing any tabs, the mouse will remain well away from all corners of your screen.
+                </li>
+                <li>
+                    The tool will not perform any operation other than moving the cursor around. Operations like clicking, dragging,
+                    etc. have not been included as a safeguard.
+                </li>
+            </ul>
+            </p>
+            <div class="buttons">
+                <form action="{{ url_for('move_cursor') }}" method="GET">
+                    <button class="begin" type="submit">Begin</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "x" || event.key === "X") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/stop_cursor",
+                        success: function (response) {
+                            console.log("Cursor movement stopped!");
+                        },
+                        error: function (error) {
+                            console.log("Error occurred while stopping cursor movement!");
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
